@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BRA AI Compliance System{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .navbar {
+            background-color: #1a472a;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar h1 {
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-links a.active {
+            background-color: #2d7a4a;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .card h2 {
+            margin-bottom: 1rem;
+            color: #1a472a;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-box {
+            background: white;
+            border-left: 4px solid #1a472a;
+            padding: 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-box h3 {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-box .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1a472a;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        table th {
+            background-color: #f0f0f0;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+            font-weight: 600;
+        }
+        
+        table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge.critical {
+            background-color: #ff4444;
+            color: white;
+        }
+        
+        .badge.high {
+            background-color: #ff9800;
+            color: white;
+        }
+        
+        .badge.medium {
+            background-color: #ffc107;
+            color: black;
+        }
+        
+        .badge.low {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .badge.compliant {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .badge.non-compliant {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .button {
+            background-color: #1a472a;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #2d7a4a;
+        }
+        
+        .button.secondary {
+            background-color: #666;
+        }
+        
+        .button.secondary:hover {
+            background-color: #888;
+        }
+        
+        .footer {
+            background-color: #1a472a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #1a472a;
+            transition: width 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <h1>🏛️ BRA AI Compliance System</h1>
+        <ul class="nav-links">
+            <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Dashboard</a></li>
+            <li><a href="/anomalies" class="{% if request.path == '/anomalies' %}active{% endif %}">Anomalies</a></li>
+            <li><a href="/risk-scoring" class="{% if request.path == '/risk-scoring' %}active{% endif %}">Risk Scores</a></li>
+            <li><a href="/audit-prioritization" class="{% if request.path == '/audit-prioritization' %}active{% endif %}">Audit Queue</a></li>
+            <li><a href="/reports" class="{% if request.path == '/reports' %}active{% endif %}">Reports</a></li>
+            <li><a href="/documentation" class="{% if request.path == '/documentation' %}active{% endif %}">Docs</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2024 Balochistan Revenue Authority | AI-Powered Compliance System</p>
+    </footer>
+</body>
+</html>

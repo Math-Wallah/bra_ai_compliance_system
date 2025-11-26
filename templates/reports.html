@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - BRA AI Compliance System{% endblock %}
+
+{% block content %}
+<h2>📊 Reports and Analytics</h2>
+
+<div class="card">
+    <h3>Industry Distribution</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Industry</th>
+                <th>Number of Taxpayers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for industry, count in industry_stats.items() %}
+            <tr>
+                <td>{{ industry }}</td>
+                <td>{{ count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <h3>Compliance Status</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for status, count in compliance_stats.items() %}
+            <tr>
+                <td>
+                    {% if status == 'Compliant' %}
+                        <span class="badge compliant">{{ status }}</span>
+                    {% else %}
+                        <span class="badge non-compliant">{{ status }}</span>
+                    {% endif %}
+                </td>
+                <td>{{ count }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+Taxpayer_ID,Tax_Period,Audit_Start_Date,Audit_Finding,Tax_Recovery,Reason_Code
+BRA-0005,2023-09-28,2023-12-10,Non-Compliant,13950.73,ITCR-001 (Inflated Input Tax Claim)
+BRA-0049,2023-01-01,2023-06-25,Non-Compliant,65572.87,ITCR-001 (Inflated Input Tax Claim)
+BRA-0004,2023-09-28,2023-12-03,Non-Compliant,54369.79,ITCR-001 (Inflated Input Tax Claim)
+BRA-0045,2023-12-27,2024-05-09,Non-Compliant,92545.61,ITCR-001 (Inflated Input Tax Claim)
+BRA-0020,2023-01-01,2023-03-06,Non-Compliant,14137.38,ITCR-001 (Inflated Input Tax Claim)
+BRA-0016,2023-06-30,2023-11-03,Non-Compliant,43282.6,ITCR-001 (Inflated Input Tax Claim)
+BRA-0011,2023-09-28,2023-12-15,Non-Compliant,27939.32,ITCR-001 (Inflated Input Tax Claim)
+BRA-0017,2023-12-27,2024-02-18,Non-Compliant,61639.91,ITCR-001 (Inflated Input Tax Claim)
+BRA-0041,2023-09-28,2023-10-31,Non-Compliant,24532.35,ITCR-001 (Inflated Input Tax Claim)
+BRA-0037,2023-09-28,2024-03-01,Non-Compliant,41507.1,ITCR-001 (Inflated Input Tax Claim)
+BRA-0012,2024-06-24,2024-08-30,Compliant,0.0,None
+BRA-0034,2023-04-01,2023-07-23,Compliant,0.0,None
+BRA-0004,2024-03-26,2024-08-30,Compliant,0.0,None
+BRA-0023,2024-06-24,2024-11-26,Compliant,0.0,None
+BRA-0039,2024-09-22,2024-12-05,Compliant,0.0,None
+BRA-0013,2023-01-01,2023-03-23,Compliant,0.0,None
+BRA-0046,2023-04-01,2023-07-19,Compliant,0.0,None
+BRA-0033,2023-01-01,2023-06-03,Compliant,0.0,None
+BRA-0017,2023-01-01,2023-05-29,Compliant,0.0,None
+BRA-0008,2023-04-01,2023-05-08,Compliant,0.0,None

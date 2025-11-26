@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Taxpayer Detail - BRA AI Compliance System{% endblock %}
+
+{% block content %}
+<h2>👤 Taxpayer Profile: {{ taxpayer.Business_Name }}</h2>
+
+<div class="card">
+    <h3>Basic Information</h3>
+    <table>
+        <tr>
+            <td><strong>Taxpayer ID:</strong></td>
+            <td>{{ taxpayer.Taxpayer_ID }}</td>
+        </tr>
+        <tr>
+            <td><strong>Business Name:</strong></td>
+            <td>{{ taxpayer.Business_Name }}</td>
+        </tr>
+        <tr>
+            <td><strong>NTN/CNIC:</strong></td>
+            <td>{{ taxpayer.NTN_CNIC }}</td>
+        </tr>
+        <tr>
+            <td><strong>Industry:</strong></td>
+            <td>{{ taxpayer.Industry_Name }} ({{ taxpayer.Industry_Code }})</td>
+        </tr>
+        <tr>
+            <td><strong>Registration Date:</strong></td>
+            <td>{{ taxpayer.Registration_Date }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h3>🎯 Risk Assessment</h3>
+    <table>
+        <tr>
+            <td><strong>Risk Score:</strong></td>
+            <td>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ risk_score.Risk_Score * 100 }}%; background-color: {% if risk_score.Risk_Score > 0.7 %}#ff4444{% elif risk_score.Risk_Score > 0.5 %}#ff9800{% else %}#4caf50{% endif %};"></div>
+                </div>
+                {{ (risk_score.Risk_Score * 100)|round(1) }}%
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Risk Level:</strong></td>
+            <td>
+                {% if risk_score.Risk_Level == 'CRITICAL' %}
+                    <span class="badge critical">CRITICAL</span>
+                {% elif risk_score.Risk_Level == 'HIGH' %}
+                    <span class="badge high">HIGH</span>
+                {% elif risk_score.Risk_Level == 'MEDIUM' %}
+                    <span class="badge medium">MEDIUM</span>
+                {% else %}
+                    <span class="badge low">LOW</span>
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Anomaly Score:</strong></td>
+            <td>{{ (risk_score.Anomaly_Score * 100)|round(1) }}%</td>
+        </tr>
+    </table>
+</div>
+
+<div class="card">
+    <h3>📊 Tax Returns History</h3>
+    {% if returns %}
+    <table>
+        <thead>
+            <tr>
+                <th>Tax Period</th>
+                <th>Gross Revenue</th>
+                <th>Tax Liability</th>
+                <th>Input Tax Claim</th>
+                <th>Input Tax Ratio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for return in returns %}
+            <tr>
+                <td>{{ return.Tax_Period }}</td>
+                <td>₨ {{ return.Gross_Revenue|int|string|reverse|regex_replace('(\\d{3})(?=\\d)', '\\1,')|reverse }}</td>
+                <td>₨ {{ return.Tax_Liability|int|string|reverse|regex_replace('(\\d{3})(?=\\d)', '\\1,')|reverse }}</td>
+                <td>₨ {{ return.Input_Tax_Claim|int|string|reverse|regex_replace('(\\d{3})(?=\\d)', '\\1,')|reverse }}</td>
+                <td>{{ (return.Input_Tax_Claim / return.Gross_Revenue * 100)|round(2) }}%</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No tax returns found.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <h3>🔍 Audit History</h3>
+    {% if audits %}
+    <table>
+        <thead>
+            <tr>
+                <th>Tax Period</th>
+                <th>Audit Start Date</th>
+                <th>Finding</th>
+                <th>Tax Recovery</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for audit in audits %}
+            <tr>
+                <td>{{ audit.Tax_Period }}</td>
+                <td>{{ audit.Audit_Start_Date }}</td>
+                <td>
+                    {% if audit.Audit_Finding == 'Compliant' %}
+                        <span class="badge compliant">COMPLIANT</span>
+                    {% else %}
+                        <span class="badge non-compliant">NON-COMPLIANT</span>
+                    {% endif %}
+                </td>
+                <td>₨ {{ audit.Tax_Recovery|int|string|reverse|regex_replace('(\\d{3})(?=\\d)', '\\1,')|reverse }}</td>
+                <td>{{ audit.Reason_Code }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No audit history found.</p>
+    {% endif %}
+</div>
+
+<div class="card">
+    <a href="/" class="button">← Back to Dashboard</a>
+</div>
+{% endblock %}

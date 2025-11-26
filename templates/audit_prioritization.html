@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Audit Prioritization - BRA AI Compliance System{% endblock %}
+
+{% block content %}
+<h2>📋 Audit Prioritization Queue</h2>
+
+<div class="card">
+    <p>This queue prioritizes taxpayers for audit based on their compliance risk scores. Auditors should focus on the highest-risk cases first to maximize revenue recovery.</p>
+</div>
+
+<div class="card">
+    <h2>Top Audit Candidates</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Priority</th>
+                <th>Taxpayer ID</th>
+                <th>Business Name</th>
+                <th>Industry</th>
+                <th>Risk Score</th>
+                <th>Risk Level</th>
+                <th>Anomaly Score</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="audit-candidates-tbody">
+            <tr><td colspan="8">Loading...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function getRiskLevelBadge(level) {
+        const badges = {
+            'CRITICAL': '<span class="badge critical">CRITICAL</span>',
+            'HIGH': '<span class="badge high">HIGH</span>',
+            'MEDIUM': '<span class="badge medium">MEDIUM</span>',
+            'LOW': '<span class="badge low">LOW</span>'
+        };
+        return badges[level] || '<span class="badge low">UNKNOWN</span>';
+    }
+    
+    async function loadAuditCandidates() {
+        try {
+            const res = await fetch('/api/audit-candidates');
+            const data = await res.json();
+            
+            const tbody = document.getElementById('audit-candidates-tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach((row, index) => {
+                const tr = document.createElement('tr');
+                const priority = index + 1;
+                tr.innerHTML = `
+                    <td><strong>#${priority}</strong></td>
+                    <td><strong>${row.Taxpayer_ID}</strong></td>
+                    <td>${row.Business_Name}</td>
+                    <td>${row.Industry_Name}</td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${row.Risk_Score * 100}%; background-color: ${row.Risk_Score > 0.7 ? '#ff4444' : row.Risk_Score > 0.5 ? '#ff9800' : '#4caf50'};"></div>
+                        </div>
+                        ${(row.Risk_Score * 100).toFixed(1)}%
+                    </td>
+                    <td>${getRiskLevelBadge(row.Risk_Level)}</td>
+                    <td>${(row.Anomaly_Score * 100).toFixed(1)}%</td>
+                    <td><a href="/taxpayer/${row.Taxpayer_ID}" class="button">Audit Now</a></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error('Error loading audit candidates:', error);
+        }
+    }
+    
+    loadAuditCandidates();
+</script>
+{% endblock %}

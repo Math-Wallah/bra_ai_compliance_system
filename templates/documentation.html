@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation - BRA AI Compliance System{% endblock %}
+
+{% block content %}
+<h2>📚 System Documentation</h2>
+
+<div class="card">
+    <h3>Overview</h3>
+    <p>The BRA AI Compliance and Fraud Detection System is an intelligent platform designed to help the Balochistan Revenue Authority identify non-compliant taxpayers and potential fraud cases using advanced machine learning techniques.</p>
+</div>
+
+<div class="card">
+    <h3>Key Components</h3>
+    
+    <h4>1. Data Processor</h4>
+    <p>Loads and prepares data from three main sources:</p>
+    <ul style="margin-left: 2rem;">
+        <li><strong>Taxpayer Master Data:</strong> Contains basic information about registered taxpayers</li>
+        <li><strong>Tax Returns:</strong> Historical tax return filings with revenue and tax information</li>
+        <li><strong>Audit History:</strong> Results of previous audits (ground truth for model training)</li>
+    </ul>
+    
+    <h4>2. Anomaly Detection</h4>
+    <p>Uses the <strong>Isolation Forest</strong> algorithm to detect unusual patterns in tax returns. Key features analyzed:</p>
+    <ul style="margin-left: 2rem;">
+        <li>Input Tax Ratio (compared to industry benchmarks)</li>
+        <li>Revenue Growth Rate</li>
+        <li>Days Since Registration</li>
+    </ul>
+    
+    <h4>3. Risk Scoring</h4>
+    <p>Employs a <strong>Gradient Boosting Machine</strong> trained on historical audit data to predict compliance risk. The model combines:</p>
+    <ul style="margin-left: 2rem;">
+        <li>Input Tax Ratio</li>
+        <li>Revenue Growth</li>
+        <li>Days Since Registration</li>
+        <li>Anomaly Score</li>
+        <li>Number of Returns Filed</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h3>How to Use</h3>
+    
+    <h4>Dashboard</h4>
+    <p>View key statistics and the top 10 high-risk taxpayers at a glance.</p>
+    
+    <h4>Anomalies</h4>
+    <p>Browse all detected anomalies. Click "Investigate" to view detailed information about a taxpayer.</p>
+    
+    <h4>Risk Scores</h4>
+    <p>See all taxpayers ranked by their compliance risk score. Higher scores indicate higher risk.</p>
+    
+    <h4>Audit Prioritization</h4>
+    <p>This is the primary tool for audit planning. Taxpayers are ranked by risk score, allowing auditors to focus on the most likely non-compliant cases first.</p>
+    
+    <h4>Taxpayer Detail</h4>
+    <p>View comprehensive information about a specific taxpayer, including:</p>
+    <ul style="margin-left: 2rem;">
+        <li>Basic information and registration details</li>
+        <li>Risk assessment and anomaly scores</li>
+        <li>Historical tax returns</li>
+        <li>Previous audit results</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h3>Risk Levels</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Risk Level</th>
+                <th>Score Range</th>
+                <th>Recommendation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><span class="badge critical">CRITICAL</span></td>
+                <td>0.70 - 1.00</td>
+                <td>Immediate audit recommended. Potential fraud indicators detected.</td>
+            </tr>
+            <tr>
+                <td><span class="badge high">HIGH</span></td>
+                <td>0.50 - 0.69</td>
+                <td>Priority audit recommended. Multiple risk factors present.</td>
+            </tr>
+            <tr>
+                <td><span class="badge medium">MEDIUM</span></td>
+                <td>0.30 - 0.49</td>
+                <td>Routine audit recommended. Some anomalies detected.</td>
+            </tr>
+            <tr>
+                <td><span class="badge low">LOW</span></td>
+                <td>0.00 - 0.29</td>
+                <td>Standard monitoring. No immediate action required.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <h3>Technical Stack</h3>
+    <ul style="margin-left: 2rem;">
+        <li><strong>Backend:</strong> Python Flask</li>
+        <li><strong>Data Processing:</strong> Pandas, NumPy</li>
+        <li><strong>Machine Learning:</strong> Scikit-learn (Isolation Forest, Gradient Boosting)</li>
+        <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript</li>
+        <li><strong>Database:</strong> CSV-based (easily upgradeable to SQL)</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h3>Support and Feedback</h3>
+    <p>For questions or feedback about the system, please contact the BRA IT Department.</p>
+</div>
+{% endblock %}
